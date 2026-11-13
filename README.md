@@ -2,9 +2,9 @@
 
 Comparación experimental de dos algoritmos que resuelven el mismo problema: **detectar elementos repetidos en un arreglo de números enteros**. Para cada algoritmo se mide el número de operaciones y el tiempo de ejecución con distintos tamaños de entrada (n).
 
-- **Curso:** Algoritmos, Semana 2 (Eficiencia y complejidad algorítmica)
-- **Universidad:** Universidad Central del Ecuador (UCE), Facultad de Ingeniería y Ciencias Aplicadas
-- **Lenguaje:** Python 3
+- **Curso:** Algoritmos - Eficiencia y complejidad algorítmica
+- **Universidad:** Universidad Central del Ecuador - Facultad de Ingeniería y Ciencias Aplicadas
+- **Lenguaje:** Python
 
 ## Algoritmos comparados
 
