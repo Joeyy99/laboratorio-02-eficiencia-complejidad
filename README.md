@@ -2,7 +2,7 @@
 
 ## El problema
 
-Este laboratorio trata de encontrar qué números se repiten dentro de un arreglo de n enteros. Para resolverlo comparamos dos formas de hacerlo y vimos cuál se comporta mejor cuando el arreglo crece.
+Este laboratorio trata de encontrar qué números se repiten dentro de un arreglo de n enteros. Para resolverlo inventamos dos formas de hacerlo y vimos cuál se comporta mejor cuando el arreglo crece.
 
 El algoritmo A ordena el arreglo de mayor a menor con inserción y después revisa cada elemento contra su vecino, porque si hay repetidos van a quedar uno al lado del otro. El algoritmo B no ordena nada: toma cada valor, busca sus copias más adelante en el arreglo y las va tachando para no volver a contarlas.
 
@@ -35,7 +35,7 @@ Los dos algoritmos encontraron la misma cantidad de repetidos (28 y 271), lo cua
 
 Lo primero que notamos es que los dos crecen de forma cuadrática. Al pasar de 100 a 1000 elementos, las operaciones de A se multiplicaron por unas 93 veces y las de B por unas 103, o sea, cerca de 100 como habíamos supuesto. Si fueran lineales solo se habrían multiplicado por 10.
 
-Lo segundo es que B salió mejor que A en esta prueba. Con n = 1000, B hizo 367.130 operaciones contra 513.880 de A, y tardó 66 ms contra casi 128 ms. Creemos que se debe al tachado: con números aleatorios entre 1 y 1000 el arreglo solo tiene 637 valores distintos, así que 363 elementos se tachan y B no tiene que recorrerlos como valor base.
+Lo segundo es que B salió mejor que A en esta prueba. Con n = 1000, B hizo 367.130 operaciones contra 513.880 de A, y tardó 66 ms contra casi 128 ms. Creemos que se debe a la lógica del tachado: con números aleatorios entre 1 y 1000 el arreglo solo tiene 637 valores distintos, así que 363 elementos se tachan y B no tiene que recorrerlos como valor base.
 
 Eso sí, esta ventaja depende de los datos. Si casi no hubiera repetidos, B haría cerca de 500.000 operaciones, parecido a lo de A. Además, solo probamos dos tamaños y con 3 repeticiones, así que los resultados sirven como una buena indicación pero no como una prueba definitiva. En `analysis.md` explicamos esto con más detalle.
 
@@ -54,4 +54,4 @@ Para correrlo basta con ejecutar `python3 src/comparacion_algoritmos.py`. Las op
 - Joel Matias Tapa Tamayo
 - Luis David Dueñas Flores
 
-Noviembre de 2026
+12 de Noviembre de 2026
