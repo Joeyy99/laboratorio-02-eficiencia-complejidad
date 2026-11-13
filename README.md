@@ -1,122 +1,53 @@
-# Laboratorio 02: Eficiencia y complejidad algorítmica
+# Laboratorio 02: eficiencia y complejidad
 
-Comparación experimental de dos algoritmos que resuelven el mismo problema: **detectar elementos repetidos en un arreglo de números enteros**. Para cada algoritmo se mide el número de operaciones y el tiempo de ejecución con distintos tamaños de entrada (n).
+## El problema
 
-- **Curso:** Algoritmos - Eficiencia y complejidad algorítmica
-- **Universidad:** Universidad Central del Ecuador - Facultad de Ingeniería y Ciencias Aplicadas
-- **Lenguaje:** Python
+Este laboratorio trata de encontrar qué números se repiten dentro de un arreglo de n enteros. Para resolverlo comparamos dos formas de hacerlo y vimos cuál se comporta mejor cuando el arreglo crece.
 
-## Algoritmos comparados
+El algoritmo A ordena el arreglo de mayor a menor con inserción y después revisa cada elemento contra su vecino, porque si hay repetidos van a quedar uno al lado del otro. El algoritmo B no ordena nada: toma cada valor, busca sus copias más adelante en el arreglo y las va tachando para no volver a contarlas.
 
-### Algoritmo A: ordenar y comparar vecinos
-1. Ordena una copia del arreglo de **mayor a menor** con ordenamiento por inserción.
-2. Recorre el arreglo ordenado comparando cada elemento con el anterior. Como los duplicados quedan uno al lado del otro, si dos vecinos son iguales ese dato se repitió.
+## Hipótesis
 
-Operaciones contadas: comparaciones y asignaciones del ordenamiento, y comparaciones entre vecinos.
+Antes de correr el código pensamos que los dos iban a ser cuadráticos, porque A usa inserción (que tiene dos ciclos anidados) y B también tiene un ciclo dentro de otro. Entonces, si n se multiplica por 10, esperábamos que las operaciones y el tiempo se multiplicaran más o menos por 100 en ambos.
 
-### Algoritmo B: contar y tachar
-1. Toma el primer valor que no esté tachado y busca sus copias en las posiciones siguientes.
-2. Cada copia encontrada se **tacha** (se marca) para no revisarla otra vez.
-3. Si el valor tuvo al menos una copia, se reporta como repetido.
+También pensamos que B iba a hacer menos operaciones que A, ya que al tachar las copias se evita revisar otra vez valores que ya se contaron, mientras que A tiene que mover elementos para ordenar y después recorrer todo de nuevo.
 
-Operaciones contadas: verificaciones de tachado, comparaciones entre datos y marcas de tachado.
+## Cómo hicimos las pruebas
 
-## Requisitos
+Usamos Python 3 desde la terminal de VS Code en una MacBook. Probamos con n = 100 y n = 1000, y los arreglos se llenaron con números aleatorios entre 1 y n. Para que la comparación fuera justa, los arreglos se generan una sola vez por cada tamaño y los dos algoritmos trabajan con exactamente los mismos datos. También dejamos la semilla fija en 42, así los números salen iguales cada vez que se corre el programa.
 
-- **Python 3.8 o superior.** No se necesita instalar ninguna librería: el programa solo usa los módulos `random` y `time`, que vienen incluidos con Python.
+Cada medición se repitió 3 veces y se sacó el promedio del tiempo. Además de medir el tiempo, contamos operaciones dentro del código. En A contamos las comparaciones y asignaciones del ordenamiento más las comparaciones entre vecinos. En B contamos las veces que se revisa si un elemento está tachado, las comparaciones entre datos y las marcas de tachado. Al final el programa también verifica que A y B encuentren los mismos repetidos, y en ningún caso salió advertencia.
 
-Para comprobar que Python está instalado:
+## Resultados
 
-```bash
-python3 --version
-```
+Esto fue lo que salió en la terminal (la captura está en la carpeta `results`):
 
-En Windows puede ser:
+| Algoritmo | n | Operaciones | Tiempo (ms) | Repetidos |
+|-----------|-----:|------------:|------------:|----------:|
+| A | 100 | 5.501 | 0,890 | 28 |
+| A | 1.000 | 513.880 | 127,947 | 271 |
+| B | 100 | 3.564 | 0,523 | 28 |
+| B | 1.000 | 367.130 | 66,098 | 271 |
 
-```bash
-python --version
-```
+Los dos algoritmos encontraron la misma cantidad de repetidos (28 y 271), lo cual nos dice que ambos están bien implementados.
 
-## Cómo ejecutar el proyecto
+## Conclusiones
 
-### 1. Obtener el código
+Lo primero que notamos es que los dos crecen de forma cuadrática. Al pasar de 100 a 1000 elementos, las operaciones de A se multiplicaron por unas 93 veces y las de B por unas 103, o sea, cerca de 100 como habíamos supuesto. Si fueran lineales solo se habrían multiplicado por 10.
 
-Con Git:
+Lo segundo es que B salió mejor que A en esta prueba. Con n = 1000, B hizo 367.130 operaciones contra 513.880 de A, y tardó 66 ms contra casi 128 ms. Creemos que se debe al tachado: con números aleatorios entre 1 y 1000 el arreglo solo tiene 637 valores distintos, así que 363 elementos se tachan y B no tiene que recorrerlos como valor base.
 
-```bash
-git clone https://github.com/Joeyy99/Eficiencia-Algoritmica-Tapa-Duenas.git
-cd Eficiencia-Algoritmica-Tapa-Duenas
-```
+Eso sí, esta ventaja depende de los datos. Si casi no hubiera repetidos, B haría cerca de 500.000 operaciones, parecido a lo de A. Además, solo probamos dos tamaños y con 3 repeticiones, así que los resultados sirven como una buena indicación pero no como una prueba definitiva. En `analysis.md` explicamos esto con más detalle.
 
-O descargar el repositorio como ZIP desde GitHub (**Code → Download ZIP**), descomprimirlo y abrir una terminal dentro de la carpeta.
+## Contenido del repositorio
 
-### 2. Ejecutar el programa
+- `README.md`: este documento.
+- `analysis.md`: la interpretación de los resultados y por qué escala cada algoritmo como lo hace.
+- `src/comparacion_algoritmos.py`: el código con los dos algoritmos y el conteo de operaciones.
+- `results/`: la tabla en Excel, la tabla en texto y la captura de la ejecución.
 
-Desde la carpeta raíz del repositorio:
+Para correrlo basta con ejecutar `python3 src/comparacion_algoritmos.py`. Las operaciones y los repetidos deberían salir idénticos porque la semilla es fija, pero los tiempos cambian según el computador.
 
-**macOS / Linux**
-
-```bash
-python3 src/comparacion_algoritmos.py
-```
-
-**Windows (PowerShell o CMD)**
-
-```bash
-python src/comparacion_algoritmos.py
-```
-
-Si `python` no funciona en Windows, probar con `py src/comparacion_algoritmos.py`.
-
-### 3. Qué se debe ver
-
-El programa genera los arreglos, ejecuta ambos algoritmos y muestra una tabla como esta:
-
-```
-Algoritmos:
-  A = Ordenar + vecinos
-  B = Contar y tachar
-Mediciones: promedio de 3 repeticiones | semilla = 42
-
-Algoritmo        n   operaciones        tiempo   repetidos
-----------------------------------------------------------
-A              100         5.501      0.195 ms          28
-A            1.000       513.880     23.277 ms         271
-B              100         3.564      0.117 ms          28
-B            1.000       367.130     16.694 ms         271
-```
-
-Los valores de **operaciones** y **repetidos** son siempre los mismos, porque los datos se generan con una semilla fija. El **tiempo** cambia en cada ejecución y depende del computador.
-
-## Cómo funciona la comparación
-
-- **Mismos datos para ambos algoritmos:** los arreglos se generan una sola vez por tamaño y A y B trabajan con exactamente los mismos, para que la comparación sea justa.
-- **Tres repeticiones:** cada medición se repite 3 veces y el tiempo reportado es el promedio.
-- **Verificación:** el programa comprueba que A y B encuentren los mismos datos repetidos y avisa si no coinciden (columna `repetidos`).
-- **Medición sin impresión:** no se imprime nada mientras corre el cronómetro, para no alterar el tiempo.
-
-## Parámetros configurables
-
-Al inicio de `src/comparacion_algoritmos.py` se pueden cambiar:
-
-| Parámetro | Valor por defecto | Descripción |
-|---|---|---|
-| `TAMANOS` | `[100, 1000]` | Tamaños de entrada (n) a probar |
-| `REPETICIONES` | `3` | Veces que se repite cada medición |
-| `SEMILLA` | `42` | Semilla del generador aleatorio, para que los datos sean reproducibles |
-
-Con `TAMANOS = [100, 1000, 10000]` el algoritmo A tardará varios segundos en el último tamaño.
-
-## Estructura del repositorio
-
-```
-.
-├── README.md        Este archivo
-├── analysis.md      Análisis de los resultados
-├── src/
-│   └── comparacion_algoritmos.py    Programa que compara los algoritmos A y B
-└── results/         Capturas y tablas de las ejecuciones
-```
 
 ## Autores
 
