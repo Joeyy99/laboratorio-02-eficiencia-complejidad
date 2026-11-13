@@ -120,7 +120,7 @@ Con `TAMANOS = [100, 1000, 10000]` el algoritmo A tardará varios segundos en el
 
 ## Autores
 
-- [Nombre completo del integrante 1]
-- [Nombre completo del integrante 2]
+- Joel Matias Tapa Tamayo
+- Luis David Dueñas Flores
 
 Noviembre de 2026
