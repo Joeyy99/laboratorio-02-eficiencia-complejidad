@@ -40,4 +40,4 @@ Además, usamos una sola semilla y un solo tipo de datos. Como el resultado de B
 
 Los dos algoritmos son cuadráticos, y en nuestras pruebas B resultó más rápido y con menos operaciones gracias al tachado, aunque esa ventaja depende de que haya números repetidos y no cambia el orden de crecimiento. Para asegurar esto en general habría que probar con más tamaños y más tipos de datos.
 
-Como comentario extra, existen formas mucho mejores de resolver este problema, como usar un `set` o un diccionario en Python, que lo hace en tiempo lineal, o usar `sorted()` en lugar de inserción. No las incluimos porque el laboratorio pedía comparar estas dos estrategias en particular.
+Como comentario extra, existen formas mucho mejores de resolver este problema, como usar un `set` o un diccionario en Python, que lo hace en tiempo lineal, o usar `sorted()` en lugar de inserción. No las incluimos porque el laboratorio pedía comparar estas dos estrategias en particular, las cuales fueron ideadas por nosotros mismos sabiendo que podían ser cualesquiera siempre que resuelvan el problema.
